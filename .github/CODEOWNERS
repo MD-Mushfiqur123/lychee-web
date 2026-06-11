@@ -1,5 +1,35 @@
 # GitHub CODEOWNERS
+# This file defines the code owners for the Lychee project.
 # For details, see: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-codeowners
 
-# Default owner for all files in the repository
-*       @lychee-maintainers
+# Global owner — MD-Mushfiqur123 owns all files in this repository
+*                               @MD-Mushfiqur123
+
+# Lychee-specific core features
+/api/types_compose.go           @MD-Mushfiqur123
+/model/chain.go                 @MD-Mushfiqur123
+/server/handler_compose.go      @MD-Mushfiqur123
+/server/handler_compose_test.go @MD-Mushfiqur123
+/server/schema_validator.go     @MD-Mushfiqur123
+/server/schema_validator_test.go @MD-Mushfiqur123
+/server/prompt_cache.go         @MD-Mushfiqur123
+/server/prompt_cache_test.go    @MD-Mushfiqur123
+/server/dashboard.go            @MD-Mushfiqur123
+/server/webui/                  @MD-Mushfiqur123
+/anthropic/                     @MD-Mushfiqur123
+/x/agent/                       @MD-Mushfiqur123
+/cmd/hf.go                      @MD-Mushfiqur123
+/cmd/hf_catalog.go              @MD-Mushfiqur123
+/cmd/hf_test.go                 @MD-Mushfiqur123
+/cmd/cmd_stats.go               @MD-Mushfiqur123
+/cmd/cmd_compare.go             @MD-Mushfiqur123
+/cmd/cmd_embed.go               @MD-Mushfiqur123
+/cmd/cmd_scan.go                @MD-Mushfiqur123
+/cmd/cmd_agent.go               @MD-Mushfiqur123
+/cmd/community_registry.go      @MD-Mushfiqur123
+/discover/models_registry.go    @MD-Mushfiqur123
+
+# Documentation
+/README.md                      @MD-Mushfiqur123
+/CHANGELOG.md                   @MD-Mushfiqur123
+/CONTRIBUTING.md                @MD-Mushfiqur123
