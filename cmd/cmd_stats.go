@@ -147,6 +147,8 @@ type statsModel struct {
 	err      error
 	interval time.Duration
 	quitting bool
+	width    int
+	height   int
 }
 
 func (m statsModel) Init() tea.Cmd {
@@ -173,6 +175,10 @@ func (m statsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.err = err
 			return m, nil
 		}
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+		return m, nil
 	case statsMsg:
 		m.running = msg.running
 		m.err = msg.err
@@ -196,7 +202,11 @@ func (m statsModel) View() string {
 		Padding(0, 1).
 		MarginBottom(1)
 
-	header := headerStyle.Render("🍒 Lychee Premium TUI Monitor  |  Press 'q' to quit, 'r' to refresh")
+	headerText := "🍒 Lychee Premium TUI Monitor  |  Press 'q' to quit, 'r' to refresh"
+	if m.width > 0 && m.width < 70 {
+		headerText = "🍒 Lychee Stats  |  'q' to quit"
+	}
+	header := headerStyle.Render(headerText)
 
 	if m.err != nil {
 		return header + "\n" + lipgloss.NewStyle().Foreground(lipgloss.Color("196")).Render(fmt.Sprintf("Error connecting to server: %v", m.err))
@@ -213,6 +223,34 @@ func (m statsModel) View() string {
 		return s
 	}
 
+	if m.width > 0 && m.width < 70 {
+		// Compact view for narrow terminals
+		tableHeaderStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("248"))
+		s += tableHeaderStyle.Render(fmt.Sprintf("  %-24s %-10s %s\n", "MODEL", "VRAM", "EXPIRES"))
+		s += lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render("  " + strings.Repeat("─", 50) + "\n")
+
+		rowStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("252"))
+		for _, loaded := range m.running.Models {
+			name := loaded.Name
+			if len(name) > 23 {
+				name = name[:20] + "..."
+			}
+			vram := formatBytes(loaded.SizeVRAM)
+			expires := "─"
+			if !loaded.ExpiresAt.IsZero() {
+				remaining := time.Until(loaded.ExpiresAt)
+				if remaining > 0 {
+					expires = formatDuration(remaining)
+				} else {
+					expires = "unloading"
+				}
+			}
+			s += rowStyle.Render(fmt.Sprintf("  %-24s %-10s %s\n", name, vram, expires))
+		}
+		return s
+	}
+
+	// Normal full view
 	tableHeaderStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("248"))
 	s += tableHeaderStyle.Render(fmt.Sprintf("  %-30s %-12s %-12s %-10s %s\n", "MODEL", "VRAM", "RAM", "CTX LIMIT", "EXPIRES"))
 	s += lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render("  " + strings.Repeat("─", 80) + "\n")
