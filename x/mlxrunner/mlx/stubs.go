@@ -65,6 +65,11 @@ func (t *Array) Dim(axis int) int { return 0 }
 func (t *Array) MultiplyScalar(s float32) *Array { return t }
 func (t *Array) Mul(other *Array) *Array { return t }
 func (t *Array) Sub(other *Array) *Array { return t }
+func (t *Array) AsStrided(shape []int, strides []int, offset int) *Array { return t }
+func (t *Array) FloorDivide(other *Array) *Array { return t }
+func (t *Array) Power(exponent *Array) *Array { return t }
+func (t *Array) Sqrt() *Array { return t }
+func (t *Array) StackAxis(axis int, others ...*Array) *Array { return t }
 
 type DType int
 
@@ -216,3 +221,41 @@ func Argsort(a *Array, axis int) *Array { return nil }
 func Flatten(a *Array) *Array { return nil }
 func Argpartition(a *Array, kth int, axis int) *Array { return nil }
 func Neg(a *Array) *Array { return nil }
+
+func Div(a, b *Array) *Array { return nil }
+func Sum(a *Array, axis int, keepDims bool) *Array { return nil }
+func Sigmoid(a *Array) *Array { return nil }
+func ZerosF32(shape []int32) *Array { return nil }
+func GatherMM(a, b *Array, lhsIndices, rhsIndices *Array, sortedIndices bool) *Array { return nil }
+func Sub(a, b *Array) *Array { return nil }
+func Exp(a *Array) *Array { return nil }
+func Sin(a *Array) *Array { return nil }
+func Cos(a *Array) *Array { return nil }
+func Clip(a, aMin, aMax *Array) *Array { return nil }
+func AddMM(c, a, b *Array, alpha, beta float32) *Array { return nil }
+func DepthwiseConv1d(x, weight *Array, bias *Array) *Array { return nil }
+func Pad(a *Array, axes []int, lowPad, highPad []int, padValue *Array, mode string) *Array { return nil }
+func PadConstant(a *Array, axes []int, lowPad, highPad []int) *Array { return nil }
+func Conv2d(x, weight *Array, strideH, strideW, padH, padW, dilationH, dilationW, groups int32) *Array { return nil }
+func Softplus(a *Array) *Array { return nil }
+func ReLU(a *Array) *Array { return nil }
+func GLU(a *Array) *Array { return nil }
+func Clamp(a *Array, minVal, maxVal float32) *Array { return nil }
+func RSqrt(a *Array) *Array { return nil }
+func Mean(a *Array, axis int, keepDims bool) *Array { return nil }
+func FromFP8(x *Array, dtype DType) *Array { return nil }
+func ToFP8(x *Array) *Array { return nil }
+func DisableCompile() {}
+
+type LayerNorm struct {
+	Weight *Array
+	Bias   *Array
+}
+
+func (r *LayerNorm) Forward(x *Array, eps float32) *Array { return x }
+
+type RMSNorm struct {
+	Weight *Array
+}
+
+func (r *RMSNorm) Forward(x *Array, eps float32) *Array { return x }
