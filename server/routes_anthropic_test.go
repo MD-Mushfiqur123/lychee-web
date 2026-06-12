@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	lychee "github.com/lychee/lychee"
+	lychee "github.com/lychee/lychee/server/internal/client/lychee"
 	"github.com/lychee/lychee/anthropic"
 	"github.com/lychee/lychee/api"
 	"github.com/lychee/lychee/llm"
