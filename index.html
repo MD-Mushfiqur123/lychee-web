@@ -116,12 +116,12 @@
 
   /* ---- reveal animation ---- */
   .reveal {
-    opacity: 0;
+    /* opacity: 0; */
     transform: translateY(28px);
     transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
     transition-delay: calc(var(--i, 0) * 90ms);
   }
-  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.in { /* opacity: 1; */ transform: translateY(0); }
   /* transform-only reveal: keeps ancestor opacity at 1 so backdrop blur of
      glass children works during the entrance instead of popping in after */
   .reveal.lift { opacity: 1; }
@@ -1304,6 +1304,25 @@
     .cta-inner { padding: 84px 20px; }
   }
 </style>
+
+<link rel="preload" href="https://github.com/md-mushfiqur-rahim123-official/pic/blob/main/hero.jpg?raw=true" as="image">
+<link rel="preload" href="https://raw.githubusercontent.com/md-mushfiqur-rahim123-official/pic/refs/heads/main/numbers.jpg" as="image">
+<link rel="preload" href="https://github.com/md-mushfiqur-rahim123-official/pic/blob/main/cta.jpg?raw=true" as="image">
+
+<style>
+/* INSTANT IMAGE OVERRIDE */
+.hero-media img, .cell-img img, .split-art img, .num-bg img, .cta-bg img, .q-img img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+.reveal.split-art, .reveal.cell-img, .reveal.cell {
+    opacity: 1 !important;
+    transform: none !important;
+}
+</style>
+
 </head>
 <body>
 
